@@ -24,7 +24,8 @@ for(const image of ['hero','technician','treatment','wasp','bedbug','cockroach']
     if(!stat||stat.mtimeMs<source.mtimeMs) await sharp(input).rotate().resize({width,withoutEnlargement:true}).webp({quality:image==='hero'?83:79,effort:5}).toFile(output);
   }
 }
-for(const route of routes){
+const publishRoutes=business.homepageOnly?routes.filter(route=>route.path==='/'):routes;
+for(const route of publishRoutes){
   let body;
   if(route.path==='/')body=home();
   else if(route.path==='/contact-devis/')body=contactPage();
@@ -34,7 +35,7 @@ for(const route of routes){
 }
 await fs.writeFile(path.join(dist,'site-data.json'),JSON.stringify({phone:business.phone,whatsapp:business.whatsapp,email:business.email,address:business.address,legalName:business.legalName,siret:business.siret,cities:business.cities}));
 await fs.writeFile(path.join(dist,'robots.txt'),`User-agent: *\n${business.indexable?'Allow: /':'Disallow: /'}\nSitemap: ${new URL('/sitemap.xml',business.siteUrl).href}\n`);
-await fs.writeFile(path.join(dist,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map(r=>`<url><loc>${new URL(r.path,business.siteUrl).href}</loc></url>`).join('')}</urlset>`);
+await fs.writeFile(path.join(dist,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${publishRoutes.map(r=>`<url><loc>${new URL(r.path,business.siteUrl).href}</loc></url>`).join('')}</urlset>`);
 await fs.writeFile(path.join(dist,'favicon.svg'),'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#103f30"/><text x="32" y="42" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="bold" fill="#c7f268">PN</text></svg>');
 const basePath=(process.env.PUBLIC_BASE_PATH||'').replace(/\/$/,'');
 if(basePath){
@@ -49,4 +50,4 @@ if(basePath){
     await fs.writeFile(file,content);
   }
 }
-console.log(`Built ${routes.length} pages in dist/. Preview is ${business.indexable?'indexable':'noindex'}.`);
+console.log(`Built ${publishRoutes.length} page${publishRoutes.length===1?'':'s'} in dist/. Preview is ${business.indexable?'indexable':'noindex'}.`);

@@ -1,6 +1,7 @@
 // All unverified business information stays empty. Never invent credentials or reviews.
 export const business = {
   name: 'PRO NUISIBLES',
+  homepageOnly: true, // Client preview: generate only the homepage and neutralize internal navigation.
   siteUrl: process.env.PUBLIC_ORIGIN || 'http://127.0.0.1:4173',
   indexable: false,
   phone: '', // international format, e.g. +33...

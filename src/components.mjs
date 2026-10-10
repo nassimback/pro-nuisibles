@@ -23,6 +23,7 @@ export const quoteButton = (label = 'Demander un devis', cls = '', query = '') =
 
 function contactHref(kind) {
   const number = kind === 'phone' ? business.phone : business.whatsapp;
+  if (business.homepageOnly) return `href="#" data-contact="${kind}"`;
   if (!number) return `href="#coordonnees" data-contact="${kind}"`;
   return kind === 'phone' ? `href="tel:${esc(number)}"` : `href="https://wa.me/${esc(number)}" target="_blank" rel="noopener noreferrer"`;
 }
@@ -138,10 +139,14 @@ export function pageHero({ label, heading: title, crumbs = [], image = 'hero' })
 
 // French typography: non-breaking space before ? : ! ; in text nodes only.
 const frenchSpacing = html => html.replace(/>([^<]+)</g, (_, text) => `>${text.replace(/ ([?:!;])/g, " $1")}<`);
+const previewNavigation = html => business.homepageOnly
+  ? html.replace(/href="\/[^\"]*"/g,'href="#"').replace(/action="\/[^\"]*"/g,'action="#"')
+  : html;
 
 export function shell(route, body) {
   const canonical = new URL(route.path, business.siteUrl).href;
   const schema = [ { '@context':'https://schema.org', '@type':'Organization', name:business.name, url:business.siteUrl }, { '@context':'https://schema.org', '@type':'WebPage', name:route.title, description:route.description, url:canonical, inLanguage:'fr-FR' } ];
   if (route.path !== '/') schema.push({ '@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Accueil',item:business.siteUrl},{'@type':'ListItem',position:2,name:route.label,item:canonical}] });
-  return `<!doctype html><html lang="fr" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(route.title)}</title><meta name="description" content="${esc(route.description)}"><meta name="robots" content="${business.indexable ? 'index,follow' : 'noindex,nofollow'}"><meta name="theme-color" content="#033f2d"><link rel="canonical" href="${esc(canonical)}"><meta property="og:type" content="website"><meta property="og:locale" content="fr_FR"><meta property="og:title" content="${esc(route.title)}"><meta property="og:description" content="${esc(route.description)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:site_name" content="PRO NUISIBLES"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="preload" href="/assets/inter-tight-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/inter-tight-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/theme.css"><script src="/boot.js"></script><script type="application/ld+json">${JSON.stringify(schema).replace(/</g,'\\u003c')}</script><script defer src="/lenis.min.js"></script><script defer src="/app.js"></script></head><body><div class="preloader" aria-hidden="true"><div class="preloader-ring"></div>${logoMark}</div><div id="cursor-ball" aria-hidden="true"></div>${header(route.path, route.path === '/' ? 'line' : 'glass')}<main id="contenu">${frenchSpacing(body)}</main>${frenchSpacing(footer())}</body></html>`;
+  const pageContent=`${header(route.path, route.path === '/' ? 'line' : 'glass')}<main id="contenu">${frenchSpacing(body)}</main>${frenchSpacing(footer())}`;
+  return `<!doctype html><html lang="fr" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(route.title)}</title><meta name="description" content="${esc(route.description)}"><meta name="robots" content="${business.indexable ? 'index,follow' : 'noindex,nofollow'}"><meta name="theme-color" content="#033f2d"><link rel="canonical" href="${esc(canonical)}"><meta property="og:type" content="website"><meta property="og:locale" content="fr_FR"><meta property="og:title" content="${esc(route.title)}"><meta property="og:description" content="${esc(route.description)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:site_name" content="PRO NUISIBLES"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="preload" href="/assets/inter-tight-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/inter-tight-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/theme.css"><script src="/boot.js"></script><script type="application/ld+json">${JSON.stringify(schema).replace(/</g,'\\u003c')}</script><script defer src="/lenis.min.js"></script><script defer src="/app.js"></script></head><body><div class="preloader" aria-hidden="true"><div class="preloader-ring"></div>${logoMark}</div><div id="cursor-ball" aria-hidden="true"></div>${previewNavigation(pageContent)}</body></html>`;
 }

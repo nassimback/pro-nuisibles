@@ -3,6 +3,13 @@ const root = document.documentElement;
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = matchMedia('(pointer: fine)').matches;
 
+/* Client preview: internal destinations are intentionally inactive. */
+document.addEventListener('click', event => {
+  const link=event.target.closest('a[href="#"]');
+  if(link&&!link.hasAttribute('data-contact'))event.preventDefault();
+});
+document.querySelectorAll('form[action="#"]').forEach(form=>form.addEventListener('submit',event=>event.preventDefault()));
+
 /* Header: mobile menu and "Nos solutions" dropdown */
 const menuButton = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#navigation');

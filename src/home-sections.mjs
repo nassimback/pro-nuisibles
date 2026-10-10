@@ -20,7 +20,7 @@ export function homeInspection() {
   const phone = business.phone ? esc(business.phone) : '[Téléphone à renseigner]';
   return `<section class="inspection"><div class="container inspection-row">
     <div class="inspection-form" ${up()}><h2>Préparez votre demande de devis</h2>${quickForm()}</div>
-    <div class="inspection-call" ${up(100)}><a class="call-line" ${business.phone ? `href="tel:${phone}"` : 'href="#coordonnees" data-contact="phone"'}><span class="icon-circle dark xl">${icon('phone')}</span><span>Appelez-nous : ${phone}</span></a><h3>Un conseil avant d’agir ? Échangez avec PRO NUISIBLES</h3><p>Décrivez ce que vous observez : nous vous aidons à identifier la prochaine étape.</p></div>
+    <div class="inspection-call" ${up(100)}><a class="call-line" ${business.homepageOnly ? 'href="#" data-contact="phone"' : business.phone ? `href="tel:${phone}"` : 'href="#coordonnees" data-contact="phone"'}><span class="icon-circle dark xl">${icon('phone')}</span><span>Appelez-nous : ${phone}</span></a><h3>Un conseil avant d’agir ? Échangez avec PRO NUISIBLES</h3><p>Décrivez ce que vous observez : nous vous aidons à identifier la prochaine étape.</p></div>
   </div></section>`;
 }
 
