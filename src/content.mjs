@@ -74,8 +74,14 @@ export const generalFaq = [
   ['Puis-je envoyer des photos du problème ?', 'Oui, le formulaire accepte jusqu’à trois photos JPEG, PNG ou WebP de 5 Mo maximum chacune. Photographiez uniquement ce qui est accessible sans danger, en évitant les personnes et documents personnels.'],
 ];
 
+// Homepage FAQ: same list, with the intervention-area answer reflecting the confirmed Bouches-du-Rhône coverage.
+export const homeFaq = generalFaq.map(([q, a], i) => i === 1 ? [
+  'Dans quelles communes intervenez-vous ?',
+  'PRO NUISIBLES intervient dans le département des Bouches-du-Rhône (13) : Marseille, Aix-en-Provence, Arles, Aubagne, Martigues, Istres, Salon-de-Provence, Vitrolles et les communes voisines. Indiquez votre commune dans votre demande de devis : le déplacement et les disponibilités sont confirmés avec vous avant tout rendez-vous.',
+] : [q, a]);
+
 export const routes = [
-  { path: '/', label: 'Accueil', title: 'PRO NUISIBLES | Désinsectisation, guêpes, punaises et cafards', description: 'Retrouvez un intérieur serein. PRO NUISIBLES vous accompagne face aux guêpes et frelons, punaises de lit, cafards et blattes. Décrivez votre besoin et demandez un devis.' },
+  { path: '/', label: 'Accueil', title: 'Désinsectisation Bouches-du-Rhône (13) | PRO NUISIBLES', description: 'Entreprise de désinsectisation dans les Bouches-du-Rhône (13) : frelons, guêpes, punaises de lit, cafards et blattes. Diagnostic, devis clair, prévention.' },
   ...services.map(s => ({ path: `/${s.slug}/`, label: s.name, title: s.title, description: s.description })),
   { path: '/services-et-zones-intervention/', label: 'Services et zones d’intervention', title: 'Désinsectisation : services et zones d’intervention | PRO NUISIBLES', description: 'Découvrez les services PRO NUISIBLES pour les particuliers, professionnels et copropriétés. Vérifiez la couverture de votre commune et préparez votre demande.' },
   { path: '/contact-devis/', label: 'Contact et demande de devis', title: 'Contact et demande de devis désinsectisation | PRO NUISIBLES', description: 'Expliquez votre problème de nuisibles à PRO NUISIBLES. Envoyez votre ville, vos coordonnées et des photos pour préparer un devis de désinsectisation adapté.' },

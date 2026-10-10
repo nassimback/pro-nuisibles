@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
-import { business } from '../site.config.mjs';
-import { services, routes } from './content.mjs';
+import { business, serviceArea, absoluteUrl } from '../site.config.mjs';
+import { services, routes, homeFaq } from './content.mjs';
 
 export const esc = (s = '') => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const iconCache = new Map();
@@ -23,8 +23,7 @@ export const quoteButton = (label = 'Demander un devis', cls = '', query = '') =
 
 function contactHref(kind) {
   const number = kind === 'phone' ? business.phone : business.whatsapp;
-  if (business.homepageOnly) return `href="#" data-contact="${kind}"`;
-  if (!number) return `href="#coordonnees" data-contact="${kind}"`;
+  if (!number) return `href="/contact-devis/" data-contact="${kind}"`;
   return kind === 'phone' ? `href="tel:${esc(number)}"` : `href="https://wa.me/${esc(number)}" target="_blank" rel="noopener noreferrer"`;
 }
 export function action(kind, label, cls = 'btn') {
@@ -139,14 +138,37 @@ export function pageHero({ label, heading: title, crumbs = [], image = 'hero' })
 
 // French typography: non-breaking space before ? : ! ; in text nodes only.
 const frenchSpacing = html => html.replace(/>([^<]+)</g, (_, text) => `>${text.replace(/ ([?:!;])/g, " $1")}<`);
-const previewNavigation = html => business.homepageOnly
-  ? html.replace(/href="\/[^\"]*"/g,'href="#"').replace(/action="\/[^\"]*"/g,'action="#"')
-  : html;
+// Structured data. The homepage carries a LocalBusiness built only from verified facts (name, area served, services);
+// address, phone and email are added automatically once they are filled in site.config.mjs. Nothing is invented.
+function homeStructuredData(route) {
+  const area = { '@type': 'AdministrativeArea', name: serviceArea.department };
+  const published = !business.homepageOnly;
+  const localBusiness = {
+    '@context': 'https://schema.org', '@type': 'LocalBusiness', '@id': `${absoluteUrl('/')}#entreprise`,
+    name: business.name, url: absoluteUrl('/'), description: route.description, inLanguage: 'fr-FR',
+    areaServed: [area, ...serviceArea.featuredCities.map(name => ({ '@type': 'City', name, containedInPlace: area }))],
+    knowsAbout: ['Désinsectisation', ...services.map(s => s.name)],
+    hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Désinsectisation dans les Bouches-du-Rhône', itemListElement: services.map(s => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.name, serviceType: 'Désinsectisation', areaServed: area, ...(published ? { url: absoluteUrl(`/${s.slug}/`) } : {}) } })) },
+    ...(business.phone ? { telephone: business.phone } : {}),
+    ...(business.email ? { email: business.email } : {}),
+    ...(business.postalAddress ? { address: { '@type': 'PostalAddress', addressCountry: 'FR', ...business.postalAddress } } : {}),
+    ...(business.legalName ? { legalName: business.legalName } : {}),
+  };
+  return [
+    localBusiness,
+    { '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${absoluteUrl('/')}#site`, name: business.name, url: absoluteUrl('/'), inLanguage: 'fr-FR' },
+    { '@context': 'https://schema.org', '@type': 'WebPage', '@id': `${absoluteUrl('/')}#page`, name: route.title, description: route.description, url: absoluteUrl('/'), inLanguage: 'fr-FR', isPartOf: { '@id': `${absoluteUrl('/')}#site` }, about: { '@id': `${absoluteUrl('/')}#entreprise` } },
+    { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: homeFaq.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) },
+  ];
+}
 
 export function shell(route, body) {
-  const canonical = new URL(route.path, business.siteUrl).href;
-  const schema = [ { '@context':'https://schema.org', '@type':'Organization', name:business.name, url:business.siteUrl }, { '@context':'https://schema.org', '@type':'WebPage', name:route.title, description:route.description, url:canonical, inLanguage:'fr-FR' } ];
-  if (route.path !== '/') schema.push({ '@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Accueil',item:business.siteUrl},{'@type':'ListItem',position:2,name:route.label,item:canonical}] });
-  const pageContent=`${header(route.path, route.path === '/' ? 'line' : 'glass')}<main id="contenu">${frenchSpacing(body)}</main>${frenchSpacing(footer())}`;
-  return `<!doctype html><html lang="fr" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(route.title)}</title><meta name="description" content="${esc(route.description)}"><meta name="robots" content="${business.indexable ? 'index,follow' : 'noindex,nofollow'}"><meta name="theme-color" content="#033f2d"><link rel="canonical" href="${esc(canonical)}"><meta property="og:type" content="website"><meta property="og:locale" content="fr_FR"><meta property="og:title" content="${esc(route.title)}"><meta property="og:description" content="${esc(route.description)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:site_name" content="PRO NUISIBLES"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="preload" href="/assets/inter-tight-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/inter-tight-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/theme.css"><script src="/boot.js"></script><script type="application/ld+json">${JSON.stringify(schema).replace(/</g,'\\u003c')}</script><script defer src="/lenis.min.js"></script><script defer src="/app.js"></script></head><body><div class="preloader" aria-hidden="true"><div class="preloader-ring"></div>${logoMark}</div><div id="cursor-ball" aria-hidden="true"></div>${previewNavigation(pageContent)}</body></html>`;
+  const isHome = route.path === '/';
+  const canonical = absoluteUrl(route.path);
+  const schema = isHome ? homeStructuredData(route) : [ { '@context':'https://schema.org', '@type':'Organization', name:business.name, url:absoluteUrl('/') }, { '@context':'https://schema.org', '@type':'WebPage', name:route.title, description:route.description, url:canonical, inLanguage:'fr-FR' } ];
+  if (!isHome) schema.push({ '@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Accueil',item:absoluteUrl('/')},{'@type':'ListItem',position:2,name:route.label,item:canonical}] });
+  const social = isHome ? `<meta property="og:image" content="${esc(absoluteUrl('/assets/og-home.jpg'))}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Professionnel en tenue de protection réalisant un traitement de désinsectisation"><meta name="twitter:card" content="summary_large_image">` : '';
+  const heroPreload = isHome ? '<link rel="preload" as="image" type="image/webp" href="/assets/hero-1280.webp" imagesrcset="/assets/hero-640.webp 640w, /assets/hero-1280.webp 1280w, /assets/hero-1800.webp 1800w" imagesizes="100vw" fetchpriority="high">' : '';
+  const pageContent=`${header(route.path, isHome ? 'line' : 'glass')}<main id="contenu">${frenchSpacing(body)}</main>${frenchSpacing(footer())}`;
+  return `<!doctype html><html lang="fr" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(route.title)}</title><meta name="description" content="${esc(route.description)}"><meta name="robots" content="${business.indexable ? 'index,follow,max-image-preview:large' : 'noindex,nofollow'}"><meta name="theme-color" content="#033f2d"><link rel="canonical" href="${esc(canonical)}"><meta property="og:type" content="website"><meta property="og:locale" content="fr_FR"><meta property="og:title" content="${esc(route.title)}"><meta property="og:description" content="${esc(route.description)}"><meta property="og:url" content="${esc(canonical)}"><meta property="og:site_name" content="PRO NUISIBLES">${social}<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="preload" href="/assets/inter-tight-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/inter-tight-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>${heroPreload}<link rel="stylesheet" href="/theme.css"><script src="/boot.js"></script><script type="application/ld+json">${JSON.stringify(schema).replace(/</g,'\\u003c')}</script><script defer src="/lenis.min.js"></script><script defer src="/app.js"></script></head><body><div class="preloader" aria-hidden="true"><div class="preloader-ring"></div>${logoMark}</div><div id="cursor-ball" aria-hidden="true"></div>${pageContent}</body></html>`;
 }

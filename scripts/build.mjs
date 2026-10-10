@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
-import { business } from '../site.config.mjs';
+import { business, absoluteUrl } from '../site.config.mjs';
 import { routes, services } from '../src/content.mjs';
 import { shell } from '../src/components.mjs';
 import { home, servicePage, areasPage, contactPage } from '../src/pages.mjs';
@@ -25,6 +25,7 @@ for(const image of ['hero','technician','treatment','wasp','bedbug','cockroach']
   }
 }
 const publishRoutes=business.homepageOnly?routes.filter(route=>route.path==='/'):routes;
+await sharp(path.join(root,'assets','hero.jpg')).rotate().resize(1200,630,{fit:'cover',position:'attention'}).jpeg({quality:82,mozjpeg:true}).toFile(path.join(dist,'assets','og-home.jpg'));
 for(const route of publishRoutes){
   let body;
   if(route.path==='/')body=home();
@@ -34,8 +35,8 @@ for(const route of publishRoutes){
   const folder=path.join(dist,route.path);await fs.mkdir(folder,{recursive:true});await fs.writeFile(path.join(folder,'index.html'),shell(route,body));
 }
 await fs.writeFile(path.join(dist,'site-data.json'),JSON.stringify({phone:business.phone,whatsapp:business.whatsapp,email:business.email,address:business.address,legalName:business.legalName,siret:business.siret,cities:business.cities}));
-await fs.writeFile(path.join(dist,'robots.txt'),`User-agent: *\n${business.indexable?'Allow: /':'Disallow: /'}\nSitemap: ${new URL('/sitemap.xml',business.siteUrl).href}\n`);
-await fs.writeFile(path.join(dist,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${publishRoutes.map(r=>`<url><loc>${new URL(r.path,business.siteUrl).href}</loc></url>`).join('')}</urlset>`);
+await fs.writeFile(path.join(dist,'robots.txt'),`User-agent: *\n${business.indexable?'Allow: /':'Disallow: /'}\nSitemap: ${absoluteUrl('/sitemap.xml')}\n`);
+await fs.writeFile(path.join(dist,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${publishRoutes.map(r=>`<url><loc>${absoluteUrl(r.path)}</loc></url>`).join('')}</urlset>`);
 await fs.writeFile(path.join(dist,'favicon.svg'),'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#103f30"/><text x="32" y="42" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="bold" fill="#c7f268">PN</text></svg>');
 const basePath=(process.env.PUBLIC_BASE_PATH||'').replace(/\/$/,'');
 if(basePath){
@@ -44,8 +45,8 @@ if(basePath){
   await collect(dist);
   for(const file of textFiles){
     let content=await fs.readFile(file,'utf8');
-    if(file.endsWith('.html'))content=content.replaceAll('href="/','href="'+basePath+'/').replaceAll('src="/','src="'+basePath+'/').replaceAll('action="/','action="'+basePath+'/');
-    if(file.endsWith('.css'))content=content.replaceAll("url('/","url('"+basePath+'/').replaceAll('url("/','url("'+basePath+'/');
+    if(file.endsWith('.html'))content=content.replaceAll('href="/','href="'+basePath+'/').replaceAll('src="/','src="'+basePath+'/').replaceAll('action="/','action="'+basePath+'/').replace(/(srcset)="([^"]*)"/g,(_,attr,value)=>`${attr}="${value.replace(/(^|,\s*)\/(?!\/)/g,`$1${basePath}/`)}"`);
+    if(file.endsWith('.css'))content=content.replaceAll("url('/","url('"+basePath+'/').replaceAll('url("/','url("'+basePath+'/').replace(/url\(\/(?!\/)/g,'url('+basePath+'/');
     if(file.endsWith('.js'))content=content.replaceAll("fetch('/","fetch('"+basePath+'/').replaceAll('href=`/','href=`'+basePath+'/').replaceAll('href="/','href="'+basePath+'/').replaceAll("href='/","href='"+basePath+'/');
     await fs.writeFile(file,content);
   }

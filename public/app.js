@@ -78,7 +78,7 @@ document.addEventListener('mouseout', placeFill);
 
 /* Headings: letter-by-letter entrance (theme heading style 3: x 50 → 0, back ease, 0.02 s stagger) */
 const splitHeading = heading => {
-  const text = heading.textContent.replace(/\s+/g, ' ').trim();
+  const text = [...heading.childNodes].map(node => node.nodeName === 'BR' ? ' ' : node.textContent).join('').replace(/\s+/g, ' ').trim();
   const visual = document.createElement('span'); visual.setAttribute('aria-hidden', 'true');
   let index = 0;
   heading.childNodes.forEach(node => {

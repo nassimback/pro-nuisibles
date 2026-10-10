@@ -1,10 +1,10 @@
-import { homeHero, homeInspection, homeAbout, homeServices, homeWhy, homeExpert, homeFeatures, homeOffers, homeEngagements, homeGuides } from './home-sections.mjs';
+import { homeHero, homeInspection, homeAbout, homeServices, homeZones, homeExpert, homeFeatures, homeOffers } from './home-sections.mjs';
 import { business } from '../site.config.mjs';
-import { services, generalFaq } from './content.mjs';
+import { services, generalFaq, homeFaq } from './content.mjs';
 import { icon, photo, action, btn, pill, heading, up, logo, faq, faqList, serviceCards, processSection, pageHero, esc, bugArt, helpLine } from './components.mjs';
 
 export function home() {
-  return `${homeHero()}${homeInspection()}${homeAbout()}${homeServices()}${homeWhy()}${homeExpert()}${homeFeatures()}${processSection()}${homeOffers()}${homeEngagements()}${homeGuides()}${faq(generalFaq)}`;
+  return `${homeHero()}${homeInspection()}${homeAbout()}${homeServices()}${homeZones()}${homeExpert()}${homeFeatures()}${processSection()}${homeOffers()}${faq(homeFaq)}`;
 }
 
 function serviceSidebar(current) {
