@@ -257,11 +257,20 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px var(--
 .city-chips li:not(.more):hover .icon-wrap{color:var(--primary)}
 .city-chips li.more{background:transparent;padding:10px 4px;color:var(--text);font-weight:400}
 .zones-actions{display:flex;flex-wrap:wrap;gap:15px 20px;margin-top:40px!important}
-.zones-card{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:480px;padding:40px;border-radius:20px;margin:10px}
+.zones-card{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:40px;min-height:480px;padding:40px;border-radius:20px;margin:10px}
 .zones-card .corner{z-index:0}
-.zones-no{position:absolute;right:20px;top:-10px;z-index:0;font-size:240px;line-height:1;font-weight:600;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.14);pointer-events:none}
+.zones-no{position:absolute;right:24px;top:-8px;z-index:0;font-size:190px;line-height:1;font-weight:600;color:transparent;-webkit-text-stroke:2px rgba(199,242,104,.28);pointer-events:none}
+.zones-top,.zones-bottom{position:relative;z-index:1}
 .zones-card h3{margin-top:30px;font-size:30px;line-height:1.1em}
 .zones-card p{margin-top:15px;max-width:420px}
+.zones-label{margin:0!important;font-size:14px;font-weight:600;color:var(--accent)!important;letter-spacing:.2px}
+.zones-services{margin-top:15px;display:grid;gap:10px}
+.zones-services a{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:12px;background:rgba(255,255,255,.1);-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);color:var(--white);font-weight:600;transition:background-color .4s,color .4s}
+.zones-services a .icon-wrap{font-size:22px;color:var(--accent);transition:color .4s}
+.zones-services a>span:not(.icon-wrap){flex:1;text-align:left}
+.zones-services a .go{font-size:20px;color:var(--white)}
+.zones-services a:hover{background:var(--accent);color:var(--primary)}
+.zones-services a:hover .icon-wrap{color:var(--primary)}
 .zones-card .zones-note{margin-top:20px;padding-top:20px;border-top:1px solid var(--dark-divider);font-size:14px}
 
 /* Dark "expert" section */
@@ -554,6 +563,7 @@ dialog .btn{text-decoration:none;margin-top:10px}
   :root{--h1:50px;--h2:38px;--section:50px}
   .hero-copy h1{font-size:clamp(32px,6vw,46px)}
   .zones-card{min-height:360px;margin:10px 0}
+  .zones-no{font-size:150px;top:-4px;right:16px}
   .block:has(>.box){padding:0}
   .box{border-radius:0}
   .btn{padding:12px 16px;gap:8px}

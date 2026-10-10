@@ -60,7 +60,7 @@ export function homeZones() {
       <ul class="city-chips" aria-label="Principales villes desservies" ${up(100)}>${cities.map(c => `<li>${icon('map-pin')}<span>${esc(c)}</span></li>`).join('')}<li class="more">et les communes environnantes</li></ul>
       <div class="zones-actions" ${up(200)}>${btn('Services et zones d’intervention', '/services-et-zones-intervention/')}${btn('Demander un devis', '/contact-devis/', { variant: 'btn-dark' })}</div>
     </div>
-    <div class="zones-card box-dark" ${up(100)}><span class="zones-no" aria-hidden="true">${serviceArea.code}</span><span class="icon-circle xl">${icon('map-pin')}</span><h3>${serviceArea.department}</h3><p>Maisons, appartements, commerces et copropriétés du département : une prise en charge adaptée à chaque lieu.</p><p class="zones-note">Disponibilités et déplacement confirmés lors de votre demande.</p></div>
+    <div class="zones-card box-dark" ${up(100)}><span class="zones-no" aria-hidden="true">${serviceArea.code}</span><div class="zones-top"><span class="icon-circle xl">${icon('map-pin')}</span><h3>${serviceArea.department}</h3><p>Maisons, appartements, commerces et copropriétés du département : une prise en charge adaptée à chaque lieu.</p></div><div class="zones-bottom"><p class="zones-label">Nuisibles traités dans le 13</p><ul class="zones-services">${services.map(s => `<li><a href="/${s.slug}/">${icon(s.icon)}<span>${s.name}</span>${icon('arrow-right', 'go')}</a></li>`).join('')}</ul><p class="zones-note">Disponibilités et déplacement confirmés lors de votre demande.</p></div></div>
   </div></section>`;
 }
 
