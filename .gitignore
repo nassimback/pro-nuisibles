@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+var/
+test-results/
+.cache/
+*.log
+assets/expert-preview.png
+dist/assets/expert-preview.webp

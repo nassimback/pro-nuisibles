@@ -1,0 +1,25 @@
+PRO NUISIBLES : recherche SEO et architecture, 8 octobre 2026
+
+Méthode : analyse qualitative des formulations et intentions présentes dans les résultats français, sans accès à un outil de volumes ou de concurrence. Aucune donnée chiffrée de recherche n’est revendiquée.
+
+Accueil / : désinsectisation, entreprise anti-nuisibles, devis désinsectisation. Présenter les trois services, orienter vers le bon traitement et le contact.
+/frelons-et-guepes/ : destruction nid de guêpes, destruction nid de frelons, intervention frelon asiatique, nid sous toiture, prix intervention. Expliquer les informations nécessaires au diagnostic et les facteurs du devis sans inventer de tarifs.
+/punaises-de-lit/ : traitement punaises de lit, désinsectisation punaises, diagnostic punaises, devis traitement, préparation logement, nombre de passages. Donner des informations utiles sans diagnostic médical ou promesse d’éradication.
+/cafards-et-blattes/ : traitement cafards, désinsectisation blattes, cafards appartement, blattes cuisine, traitement professionnel. Relier diagnostic, refuges, traitement et prévention.
+/services-et-zones-intervention/ : désinsectisation + [ville réelle], entreprise anti-nuisibles + [commune], intervention particuliers/professionnels/copropriétés. Aucune ville inventée.
+/contact-devis/ : demande devis désinsectisation, contact PRO NUISIBLES. Formulaire et coordonnées, aucun engagement tarifaire ou horaire fictif.
+
+Sources consultées pour l’intention de recherche et le contenu :
+https://www.destruction-niddeguepes.fr/ (formulations commerciales autour de la destruction de nids)
+https://www.abc-guepes.com/ (accès, diagnostic et devis)
+https://www.inelp.fr/ (identification et démarche de lutte contre les punaises)
+https://sante.gouv.fr/sante-et-environnement/substances-chimiques/especes-nuisibles-et-parasites/article/punaises-de-lit (importance des méthodes physiques, inspection et orientation vers un professionnel)
+https://www.canada.ca/fr/sante-canada/services/conseils-pour-controle-parasites/blattes.html (informations sur les blattes, refuges et prévention)
+https://www.caf.fr/allocataires/vies-de-famille/articles/que-faire-si-j-ai-des-cafards-chez-moi (contexte logement et cafards)
+
+Sources de référence visuelle :
+https://demo.awaikenthemes.com/bugfree/home-version-2/
+https://demo.awaikenthemes.com/bugfree/
+https://demo.awaikenthemes.com/bugfree/home-version-3/
+
+Publication : remplacer le domaine de développement, compléter les communes vérifiées, contrôler les coordonnées et l’identité, activer l’indexation, soumettre le sitemap. Prévoir la fiche établissement et la cohérence nom/adresse/téléphone sur les supports réels. Les pages locales doivent apporter des informations propres à chaque commune, jamais des duplications à seul nom de ville différent.

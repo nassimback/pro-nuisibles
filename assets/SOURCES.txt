@@ -1,0 +1,45 @@
+PRO NUISIBLES - real photograph selection - local development only
+Selected files are stored outside the project. No website code changed.
+
+technician-ppe-4098786.jpg | 1800x1201
+Source: https://www.pexels.com/photo/person-holding-spray-bottle-4098786/
+Author: Matilda Wormwood. Pexels photo, page states Free to use; Pexels license applies.
+Use: landscape hero with person near x=60%, indoor spray treatment. Source describes disinfection, so illustrative rather than a PRO NUISIBLES employee photograph.
+
+technician-ppe-4176229.jpg | 1800x2697
+Source: https://www.pexels.com/photo/a-woman-in-ppe-disinfecting-4176229/
+Author: Michelangelo Buonarroti. Pexels photo, page states Free to use; Pexels license applies.
+Use: portrait treatment/about section; PPE, steam/spray wand; real photograph inspected.
+
+technician-ppe-4099466.jpg | 1800x1201
+Source: https://www.pexels.com/photo/photo-of-person-spraying-disinfectant-4099466/
+Author: Matilda Wormwood. Pexels photo, page states Free to use; Pexels license applies.
+Use: alternate landscape close-up treatment; technician at left, spray at right.
+
+bedbug-real.jpg | 1806x1190
+Source: https://commons.wikimedia.org/wiki/File:Cimex_lectularius.jpg
+Author/credit: CDC / World Health Organization, Geneva, Switzerland.
+License: Wikimedia marks public domain, CDC PHIL image 6283 (1976). Macro photograph, real bedbug on skin.
+
+cockroach-real.jpg | 3730x2486
+Source: https://commons.wikimedia.org/wiki/File:Blatella_germanica_1.jpg
+Author: Bagous. License: CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/
+Attribution required with source/license link. Adaptations should be identified and use compatible share-alike terms.
+Macro photograph of German cockroach on warm beige surface.
+
+hornet-real.jpg | 2272x1704
+Source: https://commons.wikimedia.org/wiki/File:Vespa_v%C3%A9lutina.jpg
+Author: Francis ITHURBURU (Quiricou). License: CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0/
+Attribution required with source/license link. Adaptations should be identified and use compatible share-alike terms.
+Real Asian hornets on their nest, 2012 photograph.
+
+EXCLUDED DEMO CANDIDATES
+All hero-bg-image-gold.jpg, about-us-image-1-gold.jpg, about-us-image-2-gold.jpg, service-1.jpg, service-2.jpg, service-3.jpg, hero-carousel-image-*-prime.jpg are from https://demo.awaikenthemes.com/bugfree/wp-content/uploads/2026/01/ .
+Theme demo imagery is UNLICENSED PREVIEW ONLY, explicitly user-authorized only for local development; do not publish. Service photos visibly synthetic; technician authenticity not established. Prefer selected real photographs above.
+
+
+HOMEPAGE REFERENCE CUTOUT (added for requested homepage redesign)
+assets/expert-preview.png
+Source: https://demo.awaikenthemes.com/bugfree/wp-content/uploads/2026/01/our-expert-team-image-gold.png
+Reference: https://demo.awaikenthemes.com/bugfree/home-version-2/
+Rights holder/source: Awaiken Bugfree demonstration. UNLICENSED LOCAL PREVIEW ONLY, explicitly authorized for local development in the user brief. Do not publish; replace with a licensed cutout or obtain rights. No claim that this depicts PRO NUISIBLES staff or a verified real technician. Display format converted to transparent WebP.
