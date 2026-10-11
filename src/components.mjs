@@ -16,6 +16,7 @@ export const up = (delay = 0) => `data-anim="up"${delay ? ` data-delay="${delay}
 
 // Theme button: lime pill-corner button whose fill grows from the pointer (ElementsKit "position aware").
 export function btn(label, href, { variant = '', attrs = '', iconName = 'arrow-right', tag = 'a' } = {}) {
+  if (business.homepageOnly && href.startsWith('/') && href !== '/') href = '#';
   const inner = `<span class="btn-text">${label}</span>${iconName ? icon(iconName, 'btn-icon') : ''}<span class="btn-fill" aria-hidden="true"></span>`;
   return tag === 'button' ? `<button class="btn ${variant}" ${attrs}>${inner}</button>` : `<a class="btn ${variant}" href="${href}" ${attrs}>${inner}</a>`;
 }
@@ -55,7 +56,7 @@ const navItems = [
   { path: '/contact-devis/', label: 'Contact' },
 ];
 export function header(current, variant = 'line') {
-  const link = (item) => `<a href="${item.path}" ${current === item.path ? 'aria-current="page"' : ''}>${item.label}</a>`;
+  const link = (item) => `<a href="${business.homepageOnly && item.path !== '/' ? '#' : item.path}" ${current === item.path ? 'aria-current="page"' : ''}>${item.label}</a>`;
   const items = navItems.map(item => item.children
     ? `<li class="has-sub${item.children.some(c => c.path === current) ? ' is-current' : ''}"><button type="button" class="sub-toggle" aria-expanded="false">${item.label}${icon('caret-down', 'caret')}</button><ul class="sub-menu">${item.children.map(c => `<li>${link(c)}</li>`).join('')}</ul></li>`
     : `<li>${link(item)}</li>`).join('');
@@ -76,19 +77,20 @@ export function faq(items, title = 'Vos questions,\nnos réponses.', intro = 'Le
 
 // Service cards: grey card, lime icon; on hover the photo rises with a green veil (theme "service-item").
 export function serviceCards(exclude = '') {
-  return `<div class="service-grid">${services.filter(s => s.slug !== exclude).map((s, i) => `<a class="service-card" href="/${s.slug}/" ${up(i * 100)}><span class="service-card-bg">${photo(s.image, '', '', false, '(max-width: 767px) 100vw, 33vw')}</span><span class="icon-circle">${icon(s.icon)}</span><h3>${s.name}</h3><p>${s.summary}</p><span class="text-link">Découvrir la solution ${icon('arrow-right')}</span></a>`).join('')}</div>`;
+  return `<div class="service-grid">${services.filter(s => s.slug !== exclude).map((s, i) => `<a class="service-card" href="${business.homepageOnly ? '#' : `/${s.slug}/`}" ${up(i * 100)}><span class="service-card-bg">${photo(s.image, '', '', false, '(max-width: 767px) 100vw, 33vw')}</span><span class="icon-circle">${icon(s.icon)}</span><h3>${s.name}</h3><p>${s.summary}</p><span class="text-link">Découvrir la solution ${icon('arrow-right')}</span></a>`).join('')}</div>`;
 }
 
 export function helpLine(text, linkLabel, href) {
+  if (business.homepageOnly && href.startsWith('/') && href !== '/') href = '#';
   return `<p class="help-line" ${up()}><span class="help-dots"><span class="dot-photo">${photo('technician', '', '', false, '40px')}</span><span class="dot-icon">${icon('phone')}</span></span><span>${text} – <a href="${href}">${linkLabel}</a></span></p>`;
 }
 
 export function processSection(title = 'De l’inspection à la prévention,<br>une démarche claire.') {
   const steps = [
-    ['Vous décrivez la situation', 'Le nuisible observé, les pièces concernées, votre commune : quelques détails suffisent pour préparer le premier échange.', 'technician'],
-    ['Inspection & diagnostic', 'L’identification du nuisible et l’évaluation des lieux orientent la méthode, le périmètre et les précautions.', 'treatment'],
-    ['Traitement adapté', 'Une intervention ciblée, expliquée dans un devis précis, avec des consignes claires pour les occupants.', 'hero'],
-    ['Prévention & suivi', 'Des conseils de prévention et des modalités de suivi pour surveiller l’évolution de la situation.', 'wasp'],
+    ['Vous décrivez la situation', 'Le nuisible observé, les pièces concernées, votre commune : quelques détails suffisent pour préparer le premier échange.', 'team-consultation'],
+    ['Inspection & diagnostic', 'L’identification du nuisible et l’évaluation des lieux orientent la méthode, le périmètre et les précautions.', 'bed-inspection'],
+    ['Traitement adapté', 'Une intervention ciblée, expliquée dans un devis précis, avec des consignes claires pour les occupants.', 'treatment-room'],
+    ['Prévention & suivi', 'Des conseils de prévention et des modalités de suivi pour surveiller l’évolution de la situation.', 'exterior-inspection'],
   ];
   return `<section class="block"><div class="box box-white has-corners">${bugArt('corner corner-tr')}${bugArt('corner corner-bl')}<div class="container">
     <div class="center-head">${pill('Notre démarche', 'pill-grey')}${heading('h2', title)}</div>
@@ -101,6 +103,7 @@ export function finalCta() {
 }
 
 export function footer() {
+  const internal = path => business.homepageOnly && path !== '/' ? '#' : path;
   const contactItems = [
     ['envelope-simple', 'Email', business.email || '[Email à renseigner]'],
     ['phone', 'Téléphone', business.phone || '[Téléphone à renseigner]'],
@@ -109,9 +112,9 @@ export function footer() {
   return `<footer class="block footer"><div class="box box-dark">${bugArt('corner corner-tr light')}${bugArt('corner corner-bl light')}<div class="container">
     <div class="footer-strip">${logo()}${contactItems.map(([ic, label, value]) => `<div class="footer-info"><span class="icon-circle lg">${icon(ic)}</span><div><h3>${label} :</h3><p>${esc(value)}</p></div></div>`).join('')}</div>
     <div class="footer-grid">
-      <div class="footer-about"><p>Des solutions contre les nuisibles et un accompagnement clair pour retrouver des lieux sereins.</p><h3>Restons en contact :</h3><div class="footer-socials">${action('phone', 'Appeler', 'round-link')}${action('whatsapp', 'WhatsApp', 'round-link')}<a class="round-link" href="/contact-devis/">${icon('envelope-simple')}<span>Écrire</span></a></div></div>
-      <div><h3>Liens utiles</h3><ul class="star-list"><li><a href="/">Accueil</a></li><li><a href="/services-et-zones-intervention/">Services & zones</a></li><li><a href="/contact-devis/">Contact & devis</a></li><li><a href="/services-et-zones-intervention/#zones">Vérifier ma commune</a></li></ul></div>
-      <div><h3>Nos solutions</h3><ul class="star-list">${services.map(s => `<li><a href="/${s.slug}/">${s.name}</a></li>`).join('')}</ul></div>
+      <div class="footer-about"><p>Des solutions contre les nuisibles et un accompagnement clair pour retrouver des lieux sereins.</p><h3>Restons en contact :</h3><div class="footer-socials">${action('phone', 'Appeler', 'round-link')}${action('whatsapp', 'WhatsApp', 'round-link')}<a class="round-link" href="${internal('/contact-devis/')}">${icon('envelope-simple')}<span>Écrire</span></a></div></div>
+      <div><h3>Liens utiles</h3><ul class="star-list"><li><a href="/">Accueil</a></li><li><a href="${internal('/services-et-zones-intervention/')}">Services & zones</a></li><li><a href="${internal('/contact-devis/')}">Contact & devis</a></li><li><a href="${internal('/services-et-zones-intervention/#zones')}">Vérifier ma commune</a></li></ul></div>
+      <div><h3>Nos solutions</h3><ul class="star-list">${services.map(s => `<li><a href="${internal(`/${s.slug}/`)}">${s.name}</a></li>`).join('')}</ul></div>
       <div class="footer-zone"><h3>Votre commune est-elle desservie ?</h3><p>${business.address ? esc(business.address) : '[Adresse à renseigner]'} · Indiquez votre ville pour préparer votre demande.</p><form class="footer-form" action="/contact-devis/" method="get"><label class="sr-only" for="footer-city">Votre ville</label><input id="footer-city" name="commune" placeholder="Votre ville ou code postal *" autocomplete="address-level2" required maxlength="120"><button type="submit" aria-label="Envoyer ma ville">${icon('arrow-right')}</button></form></div>
     </div>
     <div class="footer-bottom"><p>© ${new Date().getFullYear()} PRO NUISIBLES. Tous droits réservés.</p><ul class="star-inline"><li><button type="button" data-modal="legal">Mentions légales</button></li><li><button type="button" data-modal="privacy">Confidentialité</button></li><li><button type="button" data-modal="credits">Crédits photos</button></li></ul></div>

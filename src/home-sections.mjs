@@ -27,9 +27,9 @@ export function homeInspection() {
 export function homeAbout() {
   return `<section class="block about"><div class="container two-col">
     <div class="about-media">
-      <div class="about-main img-reveal">${photo('technician', 'Technicienne en tenue de protection pendant un traitement', '', false, '(max-width: 767px) 80vw, 470px')}</div>
-      <div class="about-second">${photo('treatment', 'Traitement ciblé d’une surface intérieure', '', false, '(max-width: 767px) 60vw, 345px')}</div>
-      <div class="about-card" ${up(200)}><span class="mini-pill">Notre méthode</span><strong>4</strong><span class="about-card-icons">${icon('magnifying-glass')}${icon('file-text')}${icon('shield-check')}${icon('calendar-check')}</span><span>étapes claires</span><a href="/contact-devis/">Nous contacter</a></div>
+      <div class="about-main img-reveal">${photo('team-consultation', 'Échange entre un technicien et une cliente avant intervention', '', false, '(max-width: 767px) 80vw, 470px')}</div>
+      <div class="about-second">${photo('treatment-room', 'Technicien préparant une intervention dans un salon lumineux', '', false, '(max-width: 767px) 60vw, 345px')}</div>
+      <div class="about-card" ${up(200)}><span class="mini-pill">Notre méthode</span><strong>4</strong><span class="about-card-icons">${icon('magnifying-glass')}${icon('file-text')}${icon('shield-check')}${icon('calendar-check')}</span><span>étapes claires</span><a href="#">Nous contacter</a></div>
     </div>
     <div class="about-copy">
       ${pill('L’approche PRO NUISIBLES')}
@@ -60,7 +60,7 @@ export function homeZones() {
       <ul class="city-chips" aria-label="Principales villes desservies" ${up(100)}>${cities.map(c => `<li>${icon('map-pin')}<span>${esc(c)}</span></li>`).join('')}<li class="more">et les communes environnantes</li></ul>
       <div class="zones-actions" ${up(200)}>${btn('Services et zones d’intervention', '/services-et-zones-intervention/')}${btn('Demander un devis', '/contact-devis/', { variant: 'btn-dark' })}</div>
     </div>
-    <div class="zones-card box-dark" ${up(100)}><span class="zones-no" aria-hidden="true">${serviceArea.code}</span><div class="zones-top"><span class="icon-circle xl">${icon('map-pin')}</span><h3>${serviceArea.department}</h3><p>Maisons, appartements, commerces et copropriétés du département : une prise en charge adaptée à chaque lieu.</p></div><div class="zones-bottom"><p class="zones-label">Nuisibles traités dans le 13</p><ul class="zones-services">${services.map(s => `<li><a href="/${s.slug}/">${icon(s.icon)}<span>${s.name}</span>${icon('arrow-right', 'go')}</a></li>`).join('')}</ul><p class="zones-note">Disponibilités et déplacement confirmés lors de votre demande.</p></div></div>
+    <div class="zones-card box-dark" ${up(100)}><span class="zones-no" aria-hidden="true">${serviceArea.code}</span><div class="zones-top"><span class="icon-circle xl">${icon('map-pin')}</span><h3>${serviceArea.department}</h3><p>Maisons, appartements, commerces et copropriétés du département : une prise en charge adaptée à chaque lieu.</p></div><div class="zones-bottom"><p class="zones-label">Nuisibles traités dans le 13</p><ul class="zones-services">${services.map(s => `<li><a href="#">${icon(s.icon)}<span>${s.name}</span>${icon('arrow-right', 'go')}</a></li>`).join('')}</ul><p class="zones-note">Disponibilités et déplacement confirmés lors de votre demande.</p></div></div>
   </div></section>`;
 }
 
@@ -72,14 +72,14 @@ export function homeExpert() {
       <p ${up()}>Nous ne proposons pas un traitement standard : la méthode, le périmètre et les précautions dépendent du nuisible, de son activité et des lieux à protéger.</p>
       <div class="glass-cards">${[['chat-circle-text', 'À votre écoute', 'Votre situation, vos contraintes et vos questions guident le premier échange.'], ['sliders-horizontal', 'Une réponse sur mesure', 'Le nuisible, les accès et l’occupation des lieux orientent le protocole.']].map(([ic, h, t], i) => `<article class="glass-card" ${up(i * 100)}><h3>${h}</h3><p>${t}</p><span class="icon-circle">${icon(ic)}</span><span class="outline-no" aria-hidden="true">0${i + 1}</span></article>`).join('')}</div>
     </div>
-    <div class="expert-media"><img src="/assets/technician-1280.webp" alt="Professionnelle en tenue de protection lors d’une intervention" width="1280" height="1800" loading="lazy" decoding="async">${badge('expert-badge')}</div>
+    <div class="expert-media"><img src="/assets/inspection-kitchen-1280.webp" alt="Inspection minutieuse des recoins d’une cuisine" width="1280" height="1800" loading="lazy" decoding="async">${badge('expert-badge')}</div>
   </div></div></section>`;
 }
 
 export function homeFeatures() {
   const items = [['house', 'Particuliers', 'Maison ou appartement, en tenant compte du foyer.'], ['storefront', 'Professionnels', 'Commerces et bureaux, selon votre activité.'], ['buildings', 'Copropriétés', 'Parties communes et logements concernés.']];
   return `<section class="block features"><div class="container two-col">
-    <div class="features-media img-reveal shine">${photo('hero', 'Intervention de traitement dans une pièce de vie', '', false, '(max-width: 1024px) 100vw, 520px')}<div class="glass-cta" ${up(200)}><span class="glass-cta-icon">${icon('headset')}</span><p class="glass-cta-title">Encore des questions ?</p><p>Comment pouvons-nous vous aider face aux nuisibles ?</p>${btn('Nous contacter', '/contact-devis/')}</div></div>
+    <div class="features-media img-reveal shine">${photo('exterior-inspection', 'Inspection préventive des abords et fondations d’une maison', '', false, '(max-width: 1024px) 100vw, 520px')}<div class="glass-cta" ${up(200)}><span class="glass-cta-icon">${icon('headset')}</span><p class="glass-cta-title">Encore des questions ?</p><p>Comment pouvons-nous vous aider face aux nuisibles ?</p>${btn('Nous contacter', '/contact-devis/')}</div></div>
     <div class="features-copy">
       ${pill('Pour qui ?')}
       ${heading('h2', 'Une réponse adaptée<br>à chaque type de lieu')}

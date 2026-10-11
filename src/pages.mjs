@@ -1,5 +1,5 @@
 import { homeHero, homeInspection, homeAbout, homeServices, homeZones, homeExpert, homeFeatures, homeOffers } from './home-sections.mjs';
-import { business } from '../site.config.mjs';
+import { business, serviceArea } from '../site.config.mjs';
 import { services, generalFaq, homeFaq } from './content.mjs';
 import { icon, photo, action, btn, pill, heading, up, logo, faq, faqList, serviceCards, processSection, pageHero, esc, bugArt, helpLine } from './components.mjs';
 
@@ -41,9 +41,9 @@ export function servicePage(s) {
 }
 
 function coverageBlock() {
-  const cities = business.cities.length ? business.cities.map(c => `<li><a href="/contact-devis/?ville=${encodeURIComponent(c.name)}">${icon('map-pin')}${esc(c.name)}${c.postalCode ? ` <small>${esc(c.postalCode)}</small>` : ''}</a></li>`).join('') : ['[Ville principale]', '[Communes voisines]', '[Département]'].map(t => `<li><span>${icon('map-pin')}${t}</span></li>`).join('');
+  const cities = serviceArea.communes.map(name => `<li><a href="/contact-devis/?ville=${encodeURIComponent(name)}">${icon('map-pin')}${esc(name)}</a></li>`).join('');
   return `<section class="block" id="zones"><div class="container two-col coverage">
-    <div>${pill('Zone d’intervention')}${heading('h2', 'Une solution locale,<br>un accompagnement humain')}<p ${up()}>Maison, appartement, commerce ou copropriété : votre commune est le point de départ d’une intervention adaptée.</p><ul class="city-list" ${up(100)}>${cities}</ul>${business.cities.length ? '' : `<p class="small-note" ${up()}>Zone d’intervention à renseigner. La couverture de chaque commune reste à confirmer.</p>`}</div>
+    <div>${pill('Zone d’intervention')}${heading('h2', 'Une solution locale,<br>un accompagnement humain')}<p ${up()}>Maison, appartement, commerce ou copropriété : votre commune est le point de départ d’une intervention adaptée.</p><details class="coverage-communes" ${up(100)}><summary><span>${icon('map-pin')}Les ${serviceArea.communes.length} communes des Bouches-du-Rhône</span>${icon('caret-down')}</summary><ul class="city-list">${cities}</ul></details><p class="small-note" ${up()}>Nous intervenons dans le département des Bouches-du-Rhône (13). Le déplacement et les disponibilités sont confirmés avec vous avant tout rendez-vous.</p></div>
     <div class="coverage-card" ${up(100)}><span class="icon-circle xl">${icon('map-pin')}</span><h3>Votre commune est-elle desservie ?</h3><p>Renseignez une ville ou un code postal. Les modalités et disponibilités restent à confirmer lors de votre échange.</p><form id="coverage-form"><label class="sr-only" for="coverage-city">Ville ou code postal</label><div class="coverage-input"><input id="coverage-city" required maxlength="120" placeholder="Ville ou code postal *" autocomplete="address-level2">${btn('Vérifier', '', { tag: 'button', attrs: 'type="submit"', iconName: 'magnifying-glass' })}</div><p id="coverage-result" role="status"></p></form></div>
   </div></section>`;
 }

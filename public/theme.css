@@ -466,6 +466,13 @@ dialog .btn{text-decoration:none;margin-top:10px}
 .coverage>div:first-child{padding:10px 40px 10px 10px}
 .city-list{display:flex;flex-wrap:wrap;gap:10px}
 .city-list li>*{display:inline-flex;align-items:center;gap:8px;background:var(--white);border-radius:100px;padding:10px 18px;color:var(--primary);font-weight:500}
+.coverage-communes{margin-top:24px;border:1px solid var(--line,#e8eae6);border-radius:18px;background:rgba(255,255,255,.56);overflow:hidden}
+.coverage-communes summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 20px;cursor:pointer;list-style:none;color:var(--primary);font-weight:600}
+.coverage-communes summary::-webkit-details-marker{display:none}
+.coverage-communes summary>span:first-child{display:flex;align-items:center;gap:10px}
+.coverage-communes summary .icon-wrap{color:#9BD23F}
+.coverage-communes[open] summary{border-bottom:1px solid var(--line,#e8eae6)}
+.coverage-communes .city-list{padding:18px;max-height:300px;overflow:auto}
 .small-note{font-size:14px;line-height:1.5}
 .coverage-card{background:var(--white);border-radius:20px;padding:40px;margin:10px}
 .coverage-card h3{margin-top:25px;font-size:24px}

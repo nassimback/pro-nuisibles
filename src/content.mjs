@@ -1,5 +1,26 @@
 export const services = [
   {
+    slug: 'rats-et-souris', name: 'Rats et souris', short: 'Rats & souris', icon: 'mouse', image: 'rat',
+    title: 'Dératisation rats et souris dans les Bouches-du-Rhône | PRO NUISIBLES',
+    description: 'Bruits, traces ou dégâts liés aux rats et souris ? Faites évaluer la situation pour un plan de dératisation adapté et un devis clair.',
+    heading: 'Rats et souris.\nRetrouvez des lieux sereins.',
+    intro: 'La lutte contre les rongeurs commence par l’identification des accès, des zones de passage et des sources de nourriture.',
+    summary: 'Inspection, traitement ciblé et conseils de prévention pour limiter le retour des rongeurs.',
+    tag: 'PROTÉGER VOS LIEUX',
+    signs: ['Des bruits dans les cloisons ou les combles', 'Des déjections ou traces de passage', 'Des emballages, câbles ou matériaux rongés'],
+    detailTitle: 'Comprendre leur parcours avant d’agir.',
+    detail: 'Rats et souris peuvent circuler par des ouvertures discrètes et trouver refuge près des réserves, cuisines, caves ou combles. Une inspection permet de distinguer les indices, de repérer les points d’entrée et de choisir une méthode adaptée aux occupants et aux animaux domestiques.',
+    advice: 'Évitez de toucher les déjections à mains nues. Conservez les aliments fermés et signalez la présence d’enfants ou d’animaux avant toute intervention.',
+    approach: ['Repérer les signes d’activité et les accès possibles.', 'Définir des moyens de lutte adaptés aux lieux et aux contraintes de sécurité.', 'Contrôler l’évolution et proposer des mesures pour limiter de nouvelles entrées.'],
+    factors: 'Le devis tient compte de la surface, des accès, du niveau d’activité, des dispositifs nécessaires et des contrôles prévus.',
+    faq: [
+      ['Comment savoir s’il s’agit de rats ou de souris ?', 'La taille des traces et des déjections peut orienter l’identification, mais une inspection permet de confirmer le rongeur et ses zones de passage.'],
+      ['Faut-il quitter les lieux ?', 'Cela dépend des moyens retenus. Les consignes pour les occupants et les animaux sont précisées avant l’intervention.'],
+      ['Une seule intervention suffit-elle ?', 'Le suivi dépend de l’activité observée et des points d’entrée. Les contrôles éventuels sont détaillés dans le devis.'],
+      ['Que faire en attendant ?', 'Rangez les aliments dans des contenants fermés, limitez les sources d’eau et évitez de manipuler les indices sans protection.'],
+    ],
+  },
+  {
     slug: 'frelons-et-guepes', name: 'Frelons et guêpes', short: 'Nids de guêpes & frelons', icon: 'bug', image: 'wasp',
     title: 'Destruction de nids de guêpes et frelons | PRO NUISIBLES',
     description: 'Un nid de guêpes ou de frelons près de votre habitation ? Décrivez son emplacement à PRO NUISIBLES pour préparer une intervention et un devis adapté.',

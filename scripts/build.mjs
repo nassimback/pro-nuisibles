@@ -16,7 +16,7 @@ await fs.copyFile(path.join(root,'node_modules/lenis/dist/lenis.min.js'),path.jo
 await fs.copyFile(path.join(root,'node_modules/@phosphor-icons/core/assets/bold/asterisk-bold.svg'),path.join(dist,'assets','asterisk.svg'));
 if (business.indexable && business.expertImageIsPreview) throw new Error('Remplacez ou licenciez le visuel détouré de démonstration avant publication, puis désactivez expertImageIsPreview.');
 for(const weight of [400,500,600,700]) await fs.copyFile(path.join(root,`node_modules/@fontsource/inter-tight/files/inter-tight-latin-${weight}-normal.woff2`),path.join(dist,`assets/inter-tight-latin-${weight}-normal.woff2`));
-for(const image of ['hero','technician','treatment','wasp','bedbug','cockroach']){
+for(const image of ['hero','technician','treatment','wasp','bedbug','cockroach','rat','bed-inspection','wasp-inspection','inspection-kitchen','team-consultation','treatment-room','exterior-inspection']){
   const input=path.join(root,'assets',`${image}.jpg`);
   for(const width of [640,1280,1800]){
     const output=path.join(dist,'assets',`${image}-${width}.webp`);
